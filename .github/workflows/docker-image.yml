@@ -20,9 +20,9 @@ jobs:
     - name: 🏗️ Build Docker Image
       run: |
         IMAGE_NAME="ghcr.io/${GITHUB_ACTOR,,}/cloudnet"
-        docker build . --file pterodactyl/images/cloudnet/Dockerfile --tag $IMAGE_NAME:latest
+        cd pterodactyl/images/cloudnet
+        docker build . --tag $IMAGE_NAME:latest
         docker tag $IMAGE_NAME:latest $IMAGE_NAME:$(date +%s)
-
     - name: 📤 Push Docker Image to GHCR
       run: |
         IMAGE_NAME="ghcr.io/${GITHUB_ACTOR,,}/cloudnet"
