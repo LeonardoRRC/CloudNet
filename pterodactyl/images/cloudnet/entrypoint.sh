@@ -14,8 +14,12 @@ echo -e "=========================================${RESET_COLOR}"
 
 # Get and list available Java versions
 update-alternatives --list java | while read -r java_path; do
-    java_version=$($java_path -version 2>&1 | awk -F '"' '/version/ {print $2}')
-    echo -e "${GREEN}Java Version:${RESET_COLOR} ${YELLOW}$java_version${RESET_COLOR}  →  ${java_path}"
+    if [[ -x "$java_path" ]]; then
+        java_version=$("$java_path" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+        echo -e "${GREEN}Java Version:${RESET_COLOR} ${YELLOW}$java_version${RESET_COLOR}"
+        echo -e "${GREEN}Path:${RESET_COLOR} $java_path"
+        echo -e "-----------------------------------------"
+    fi
 done
 
 # Set environment variable that holds the Internal Docker IP
